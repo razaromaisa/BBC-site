@@ -352,7 +352,7 @@ export function Footer() {
         </div>
       </div>
       <div className="container f-bottom">
-        <span>© {new Date().getFullYear()} BBC – Bismillah Battery Center. All rights reserved.</span>
+        <span>© {new Date().getFullYear()} · Developed by Romaisa</span>
         <span className="f-legal">
           Prices may change with market rates. · <Link href="/privacy-policy">Privacy Policy</Link> · <Link href="/photo-credits">Photo credits</Link>
         </span>
