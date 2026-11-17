@@ -1,5 +1,12 @@
 import { CATEGORIES, FAQS, PRODUCTS, categoryHref, type Category } from "@/lib/data";
 import { CONFIG, SITE_URL, rs } from "@/lib/config";
+import { ALL_DISTRICTS, AJK_PAGE } from "@/lib/areas";
+
+/** Where the business works: every district of Azad Jammu & Kashmir. */
+const AREA_SERVED = [
+  { "@type": "AdministrativeArea", name: "Azad Jammu and Kashmir" },
+  ...ALL_DISTRICTS.map((d) => ({ "@type": "AdministrativeArea", name: `${d} District, Azad Kashmir` })),
+];
 
 /* Structured data so Google understands the shop: local business, opening hours, products & FAQs. */
 
@@ -18,15 +25,16 @@ export function BusinessJsonLd() {
   const prices = PRODUCTS.map((p) => p.price);
   const business = {
     "@context": "https://schema.org",
-    "@type": "ElectronicsStore",
+    // A shop that also installs: electronics store + home improvement (solar) contractor
+    "@type": ["ElectronicsStore", "HomeAndConstructionBusiness"],
     "@id": `${SITE_URL}/#store`,
-    name: CONFIG.name,
-    alternateName: ["Bismillah Battery Center", "BBC Kotli", "بسم اللہ بیٹری سینٹر"],
+    name: CONFIG.businessName,
+    alternateName: ["BBC", "BBC Kotli", "BBC Solar Energy", CONFIG.name, "بسم اللہ بیٹری سینٹر"],
     description:
-      "Solar panels, hybrid inverters, lithium, tubular and dry batteries, UPS, fans, ACs, home appliances and CCTV cameras, with solar installation and after-sales service.",
-    url: SITE_URL,
+      `Solar installation company in ${CONFIG.city}, Azad Kashmir. Solar panels, hybrid inverters, lithium, tubular and dry batteries, UPS, fans, ACs, home appliances and CCTV cameras, with installation and after-sales service across AJK.`,
+    url: `${SITE_URL}/`,
     image: [`${SITE_URL}/opengraph-image`, `${SITE_URL}/images/site/hero.jpg`],
-    logo: `${SITE_URL}/icon.svg`,
+    logo: `${SITE_URL}/icon.png`,
     telephone: CONFIG.phoneLink,
     priceRange: `${rs(Math.min(...prices))} – ${rs(Math.max(...prices))}`,
     currenciesAccepted: "PKR",
@@ -37,14 +45,18 @@ export function BusinessJsonLd() {
       addressRegion: CONFIG.region,
       addressCountry: "PK",
     },
-    areaServed: [CONFIG.city, CONFIG.region],
+    ...(CONFIG.geo ? { geo: { "@type": "GeoCoordinates", latitude: CONFIG.geo.lat, longitude: CONFIG.geo.lng } } : {}),
+    // Google Maps listing and social pages: tells Google they are all the same business
+    ...([CONFIG.googleBusinessUrl, ...CONFIG.socials].filter(Boolean).length
+      ? { sameAs: [CONFIG.googleBusinessUrl, ...CONFIG.socials].filter(Boolean) } : {}),
+    areaServed: AREA_SERVED,
     openingHoursSpecification: [{
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
       opens: "09:00",
       closes: "21:00",
     }],
-    hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONFIG.mapQuery || CONFIG.address)}`,
+    hasMap: CONFIG.googleBusinessUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONFIG.mapQuery || CONFIG.address)}`,
     contactPoint: {
       "@type": "ContactPoint",
       telephone: CONFIG.phoneLink,
@@ -68,7 +80,10 @@ export function BusinessJsonLd() {
       })),
     },
     makesOffer: [
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Solar system installation", description: "Free site survey, system design, installation and after-sales service." } },
+      { "@type": "Offer", itemOffered: {
+        "@type": "Service", "@id": `${SITE_URL}${AJK_PAGE}#service`, name: "Solar panel installation",
+        description: "Site survey, system design, installation and after-sales service across Azad Kashmir.", url: `${SITE_URL}${AJK_PAGE}`,
+      } },
       { "@type": "Offer", itemOffered: { "@type": "Service", name: "CCTV camera installation" } },
       { "@type": "Offer", itemOffered: { "@type": "Service", name: "UPS & battery installation" } },
     ],
@@ -79,7 +94,8 @@ export function BusinessJsonLd() {
     "@type": "WebSite",
     "@id": `${SITE_URL}/#website`,
     url: SITE_URL,
-    name: CONFIG.name,
+    name: CONFIG.businessName,
+    alternateName: CONFIG.name,
     inLanguage: "en-PK",
     publisher: { "@id": `${SITE_URL}/#store` },
   };
@@ -87,13 +103,13 @@ export function BusinessJsonLd() {
   return <Ld data={[business, website]} />;
 }
 
-/** FAQ answers: home page only (where the FAQs are shown). */
-export function FaqJsonLd() {
+/** FAQ answers: only on pages where the same questions are shown. Defaults to the home page FAQs. */
+export function FaqJsonLd({ faqs = FAQS }: { faqs?: { q: string; a: string }[] }) {
   return (
     <Ld data={{
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: FAQS.map((f) => ({
+      mainEntity: faqs.map((f) => ({
         "@type": "Question",
         name: f.q,
         acceptedAnswer: { "@type": "Answer", text: f.a },
@@ -145,6 +161,28 @@ export function CategoryJsonLd({ c }: { c: Category }) {
           },
         },
       })),
+    }} />
+  );
+}
+
+/** The solar installation service, on the Azad Kashmir installation page. */
+export function SolarServiceJsonLd({ description }: { description: string }) {
+  return (
+    <Ld data={{
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": `${SITE_URL}${AJK_PAGE}#service`,
+      name: "Solar panel installation",
+      serviceType: "Solar energy system installation",
+      description,
+      url: `${SITE_URL}${AJK_PAGE}`,
+      provider: { "@id": `${SITE_URL}/#store` },
+      areaServed: AREA_SERVED,
+      availableChannel: {
+        "@type": "ServiceChannel",
+        servicePhone: { "@type": "ContactPoint", telephone: CONFIG.phoneLink },
+        serviceLocation: { "@id": `${SITE_URL}/#store` },
+      },
     }} />
   );
 }

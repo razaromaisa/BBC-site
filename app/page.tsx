@@ -4,7 +4,7 @@ import ContactForm from "@/components/ContactForm";
 import SolarCalculator from "@/components/SolarCalculator";
 import { FaqJsonLd } from "@/components/JsonLd";
 import {
-  Hero, TrustStrip, Categories, SolarSection, BatteryGuide,
+  Hero, TrustStrip, Categories, SolarSection, AreasBand, BatteryGuide,
   Warranty, Brands, CtaBand, ContactInfo, Faq,
 } from "@/components/Sections";
 
@@ -18,6 +18,7 @@ export default function HomePage() {
       <Categories />
       <Products />
       <SolarSection />
+      <AreasBand />
       <SolarCalculator />
       <BatteryGuide />
       <Warranty />

@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/optimize-images.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/optimize-images.mjs",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "seo:check": "node tools/seo-check.mjs"
   },
   "dependencies": {
     "next": "^15.5.0",
@@ -16,6 +19,7 @@
     "@types/node": "^22.0.0",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
+    "sharp": "^0.35.5",
     "typescript": "^5.6.0"
   }
 }

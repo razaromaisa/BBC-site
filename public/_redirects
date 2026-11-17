@@ -1,0 +1,4 @@
+# Short / old addresses (read by Cloudflare Pages). Format: from  to  status
+/privacy   /privacy-policy  301
+/products  /#products       302
+/contact   /#contact        302

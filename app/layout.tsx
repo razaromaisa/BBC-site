@@ -12,11 +12,14 @@ import { CONFIG, SITE_URL } from "@/lib/config";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta", display: "swap" });
-const urdu = Noto_Nastaliq_Urdu({ subsets: ["arabic"], weight: ["600"], variable: "--font-urdu", display: "swap" });
+// Only used for one line in the footer, so it isn't downloaded up front (saves data on phones)
+const urdu = Noto_Nastaliq_Urdu({ subsets: ["arabic"], weight: ["600"], variable: "--font-urdu", display: "swap", preload: false });
 
-const TITLE = `Solar Panels, Batteries & UPS in ${CONFIG.city} | Bismillah Battery Center`;
+/* Home page: owns the main local search, "solar installation in Kotli". Keep the title under ~60 characters
+   and the description under ~155 so Google shows them in full on phones. */
+const TITLE = `Solar Installation in ${CONFIG.city}, AJK | ${CONFIG.businessName}`;
 const DESCRIPTION =
-  `Solar panels, hybrid inverters, lithium & tubular batteries, UPS, ACs and CCTV in ${CONFIG.city}, AJK. 150+ solar projects installed. Free site survey.`;
+  `Solar panel installation in ${CONFIG.city} and across Azad Kashmir. Hybrid inverters, lithium batteries & UPS. 150+ systems installed. Free site survey.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -24,10 +27,9 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   applicationName: CONFIG.name,
   keywords: [
-    "solar panels Kotli", "solar system Kotli", "solar installation Azad Kashmir", "solar panel price in Kotli",
-    "lithium battery Kotli", "tubular battery", "dry battery", "UPS Kotli", "hybrid inverter", "5kW solar system price",
-    "solar calculator", "battery backup calculator", "CCTV camera installation Kotli", "inverter AC", "Bismillah Battery Center",
-    "BBC Kotli", "AJK solar",
+    "solar installation Kotli", "solar panels Kotli", "solar company Kotli", "solar system price in Kotli",
+    "solar installation Azad Kashmir", "solar company AJK", "solar Mirpur", "solar Muzaffarabad", "solar Rawalakot",
+    "lithium battery Kotli", "hybrid inverter", "5kW solar system price", "UPS Kotli", "Bismillah Battery Center", "BBC Kotli",
   ],
   category: "shopping",
   alternates: { canonical: "/" },

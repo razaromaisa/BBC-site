@@ -5,14 +5,15 @@ import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CATEGORIES, PRODUCTS, catName, categoryHref } from "@/lib/data";
 import { CONFIG, rs, telLink, waLink } from "@/lib/config";
+import { AJK_PAGE, PRICE_PAGE } from "@/lib/areas";
 import { useShop } from "./ShopProvider";
 import { ProductMedia } from "./Art";
 import { BrandMark, CartIcon, PhoneIcon, SearchIcon, WaIcon } from "./Icons";
 
 /* Extra links shown after the categories in the menu bar */
 const EXTRA: { label: string; href: string }[] = [
-  { label: "Solar Calculator", href: "/#calculator" },
-  { label: "Installation", href: "/#solar" },
+  { label: "Solar Prices", href: PRICE_PAGE },
+  { label: "Installation", href: AJK_PAGE },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -125,7 +126,6 @@ export default function Header() {
             <span className="head-call-ico"><PhoneIcon /></span>
             <span><small>Call or WhatsApp</small><strong>{CONFIG.phone}</strong></span>
           </a>
-          <a className="icon-btn head-tel" href={telLink()} aria-label={`Call ${CONFIG.phone}`}><PhoneIcon /></a>
           <a className="icon-btn icon-wa" href={waLink("Assalam o Alaikum! I want to ask about your products.")} target="_blank" rel="noopener" aria-label="WhatsApp us">
             <WaIcon />
           </a>
@@ -150,7 +150,12 @@ export default function Header() {
             })}
           </ul>
           <ul className="nav-links nav-extra">
-            {EXTRA.map((n) => <li key={n.label}><a href={n.href}>{n.label}</a></li>)}
+            {EXTRA.map((n) => (
+              <li key={n.label}>
+                {n.href.startsWith("/#") ? <a href={n.href}>{n.label}</a>
+                  : <Link href={n.href} aria-current={pathname === n.href ? "page" : undefined}>{n.label}</Link>}
+              </li>
+            ))}
           </ul>
         </div>
       </nav>
