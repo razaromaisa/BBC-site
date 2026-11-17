@@ -10,9 +10,9 @@ export const CONFIG = {
   titleSuffix: "BBC Kotli", // added after every page title: "Page name | BBC Kotli"
   city: "Kotli",
   region: "Azad Jammu & Kashmir",
-  phone: "0310 0873552", // shown on the site (same number for calls & WhatsApp)
-  phoneLink: "+923100873552", // used for the "Call" buttons: +92 then the number without the first 0
-  whatsapp: "923100873552", // digits only: 92 + number without the first 0, no "+" or spaces
+  phone: "0342 5044061", // shown on the site (same number for calls & WhatsApp)
+  phoneLink: "+923425044061", // used for the "Call" buttons: +92 then the number without the first 0
+  whatsapp: "923425044061", // digits only: 92 + number without the first 0, no "+" or spaces
   address: "Link Road, Larri Adda, Kotli, Azad Kashmir",
   hours: "Mon – Sun: 9:00 AM – 9:00 PM",
   mapQuery: "Link Road, Larri Adda, Kotli, Azad Kashmir", // what the Google Map shows – leave "" to hide the map
