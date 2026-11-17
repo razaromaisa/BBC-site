@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { CATEGORIES, REVIEWS, categoryHref } from "@/lib/data";
-import { rs, waLink } from "@/lib/config";
+import { CONFIG, rs, telLink, waLink } from "@/lib/config";
+import { AJK_PAGE, PRICE_PAGE } from "@/lib/areas";
 import { rememberWhatsApp } from "@/lib/whatsapp";
 import { useShop } from "./ShopProvider";
 import { CategoryMedia, ProductMedia } from "./Art";
-import { BrandMark, CartIcon, CloseIcon, GridIcon, HomeIcon, WaIcon } from "./Icons";
+import { BrandMark, CartIcon, CloseIcon, GridIcon, HomeIcon, PhoneIcon, WaIcon } from "./Icons";
 
 export function MobileMenu() {
   const { menuOpen, closeAll } = useShop();
@@ -32,7 +33,8 @@ export function MobileMenu() {
       <p className="drawer-label">Explore</p>
       <nav className="m-links" onClick={closeAll}>
         <Link href="/">Home</Link>
-        <a href="/#solar">Solar Installation</a>
+        <Link href={AJK_PAGE}>Solar Installation in AJK</Link>
+        <Link href={PRICE_PAGE}>Solar System Prices</Link>
         <a href="/#calculator">Solar &amp; Backup Calculator</a>
         <a href="/#batteries">Battery Guide</a>
         <a href="/#warranty">Warranty</a>
@@ -156,6 +158,9 @@ export function BottomNav() {
         </span>
         <span>Cart</span>
       </button>
+      <a className="bn-call" href={telLink()} aria-label={`Call ${CONFIG.phone}`}>
+        <PhoneIcon /><span>Call</span>
+      </a>
       <a className="bn-wa" href={waLink("Assalam o Alaikum! I want to ask about your products.")} target="_blank" rel="noopener">
         <WaIcon /><span>WhatsApp</span>
       </a>

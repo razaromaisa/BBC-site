@@ -3,6 +3,9 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { CONFIG } from "@/lib/config";
 
+// Built once into a plain file at build time (needed for static hosting on Cloudflare Pages)
+export const dynamic = "force-static";
+
 /* The preview picture shown when the site is shared on WhatsApp, Facebook, X, etc.
    Built from a real photo (public/images/site/hero.jpg) with the shop name on top. */
 export const alt = `${CONFIG.name}: solar panels, batteries & UPS in ${CONFIG.city}, AJK`;

@@ -123,7 +123,6 @@ p { margin: 0; }
 .head-call-ico svg { width: 20px; height: 20px; fill: #C77F00; }
 .head-call small { display: block; font-size: 12px; color: var(--muted); font-weight: 600; line-height: 1.2; }
 .head-call strong { font-size: 14.5px; white-space: nowrap; }
-.head-tel { display: none; }
 .cart-btn { background: var(--navy); color: #fff; }
 .cart-btn:hover { background: var(--navy-2); }
 .cart-btn svg { fill: #fff; }
@@ -496,26 +495,28 @@ a.c-card:hover { background: #fff; box-shadow: var(--sh-sm); }
   .brand { margin-right: auto; }
   .head-actions { margin-left: 0; gap: 8px; }
   .head-actions .icon-wa, .head-actions .cart-btn { display: none; }
-  .head-tel { display: grid; background: var(--gold-soft); }
-  .head-tel svg { fill: #C77F00; }
   .search { order: 5; flex: 1 1 100%; max-width: none; height: 46px; }
   .search-ico { margin-left: 14px; }
   .search-btn { display: none; }
 
   /* App-style bottom bar replaces the hamburger, header cart and floating WhatsApp button */
   body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
-  .bottom-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 95; display: grid; grid-template-columns: repeat(4, 1fr); height: calc(64px + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); background: rgba(255,255,255,.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid var(--line); box-shadow: 0 -6px 24px rgba(16,24,40,.06); }
+  .bottom-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 95; display: grid; grid-template-columns: repeat(5, 1fr); height: calc(64px + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); background: rgba(255,255,255,.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid var(--line); box-shadow: 0 -6px 24px rgba(16,24,40,.06); }
   .bottom-nav > a, .bottom-nav > button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 11.5px; font-weight: 700; color: var(--muted); transition: color .2s; }
   .bottom-nav svg { width: 23px; height: 23px; }
   .bottom-nav .on { color: var(--navy); }
   .bottom-nav .on svg { color: var(--gold); }
   .bn-ico { position: relative; display: grid; }
   .bn-count { position: absolute; top: -6px; right: -10px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 999px; background: var(--gold); color: var(--navy); font-size: 10.5px; font-weight: 800; display: grid; place-items: center; border: 2px solid #fff; animation: pop .45s var(--ease); }
+  .bottom-nav .bn-call { color: #B57300; }
+  .bottom-nav .bn-call svg { fill: currentColor; }
   .bottom-nav .bn-wa { color: #13A150; }
   .bottom-nav .bn-wa svg { fill: currentColor; }
   .wa-float { display: none; }
   .toast { bottom: calc(76px + env(safe-area-inset-bottom)); }
   .drawer { bottom: calc(64px + env(safe-area-inset-bottom)); }
+  /* 16px text in form fields stops iPhones zooming the page when a field is tapped */
+  .search input, .field input, .field select, .field textarea, .calc-select, .stepper input, .appl-list .stepper input { font-size: 16px; }
   .overlay { bottom: calc(64px + env(safe-area-inset-bottom)); }
   .product-grid { grid-template-columns: repeat(2, 1fr); }
   .bat-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
@@ -612,6 +613,10 @@ a.c-card:hover { background: #fff; box-shadow: var(--sh-sm); }
   .form { padding: 22px; }
 
   .f-grid { grid-template-columns: 1fr; gap: 30px; }
+  /* Bigger tap areas for footer links on phones */
+  .footer ul:not(.f-contact) { gap: 0; }
+  .footer ul:not(.f-contact) a { display: block; padding: 8px 0; }
+  .f-contact { gap: 14px; }
   .f-bottom { padding: 20px 16px; }
 
   .toast { min-width: 0; width: calc(100% - 24px); }
@@ -812,4 +817,81 @@ a.c-card:hover { background: #fff; box-shadow: var(--sh-sm); }
   .page-ctas .btn { flex: 1 1 100%; }
   .more-cats, .nf-cats { grid-template-columns: 1fr; }
   .ty-links .btn { flex: 1 1 100%; }
+}
+
+/* =========================================================
+   Local SEO pages: areas, installation & prices (phone first)
+   ========================================================= */
+.sub-title { font-size: clamp(22px, 2.4vw, 28px); color: var(--navy); margin: 48px 0 18px; }
+.narrow .sub-title:first-child { margin-top: 0; }
+.page-head-photo { position: relative; aspect-ratio: 4 / 3; border-radius: var(--r-lg); overflow: hidden; background: var(--soft); }
+.page-head-photo img { object-fit: cover; }
+
+/* Home page: areas we cover */
+.area-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.area-card { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px; border-radius: var(--r-lg); background: #fff; border: 1px solid var(--line); transition: border-color .2s, box-shadow .2s; }
+.area-card:hover { border-color: var(--navy); box-shadow: var(--sh-sm); }
+.area-card strong { font-size: 16px; color: var(--navy); }
+.area-card strong::after { content: " →"; color: var(--gold); }
+.area-card span { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+/* Installation page */
+.region-list { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.region { padding: 22px; border-radius: var(--r-lg); background: #fff; border: 1px solid var(--line); scroll-margin-top: 140px; }
+.region h3 { font-size: 20px; color: var(--navy); margin-bottom: 14px; }
+.district-list { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 8px; }
+.district-list li { display: grid; gap: 2px; padding: 10px 12px; border-radius: var(--r-md); background: var(--soft); font-size: 14px; }
+.district-list strong { color: var(--ink); }
+.district-list span { color: var(--muted); }
+.tick-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.tick-list li { position: relative; padding-left: 28px; font-size: 15px; color: var(--ink-2); line-height: 1.55; }
+.tick-list li::before { content: ""; position: absolute; left: 0; top: 2px; width: 19px; height: 19px; border-radius: 50%; background: #E7F8EF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2312B76A' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2Z'/%3E%3C/svg%3E") center/13px no-repeat; }
+.tick-list.wide { max-width: 820px; }
+.incl-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.incl { padding: 18px 20px; border-radius: var(--r-lg); background: var(--soft); }
+.incl h3 { font-size: 16px; color: var(--navy); margin-bottom: 4px; }
+.incl p { font-size: 14.5px; color: var(--ink-2); line-height: 1.55; }
+.step-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: step; }
+.step-list li { position: relative; display: grid; gap: 2px; padding: 16px 18px 16px 64px; border-radius: var(--r-lg); border: 1px solid var(--line); counter-increment: step; }
+.step-list li::before { content: counter(step); position: absolute; left: 16px; top: 16px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--gold-2); color: var(--navy); font-weight: 800; }
+.step-list strong { font-size: 16px; color: var(--navy); }
+.step-list span { font-size: 14.5px; color: var(--ink-2); line-height: 1.55; }
+
+/* Price page */
+.price-stats { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 28px; }
+.price-stat { display: grid; padding: 16px 18px; border-radius: var(--r-lg); background: var(--soft); border: 1px solid var(--line-2); transition: border-color .2s; }
+.price-stat:hover { border-color: var(--navy); }
+.price-stat small { font-size: 13px; font-weight: 700; color: var(--muted); }
+.price-stat strong { font-size: 24px; color: var(--navy); letter-spacing: -.02em; }
+.price-stat strong span { font-size: 15px; color: var(--muted); font-weight: 600; }
+.price-stat em { font-style: normal; font-size: 13px; color: var(--muted); }
+.size-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.size-card { display: flex; flex-direction: column; padding: 20px; border-radius: var(--r-lg); border: 1px solid var(--line); background: #fff; }
+.size-card h3 { font-size: 20px; color: var(--navy); }
+.size-runs { font-size: 14.5px; color: var(--ink-2); margin: 4px 0 14px; }
+.size-card dl { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 0 14px; }
+.size-card dl div { padding: 10px 12px; border-radius: var(--r-md); background: var(--soft); }
+.size-card dt { font-size: 12px; font-weight: 600; color: var(--muted); }
+.size-card dd { margin: 0; font-size: 15px; font-weight: 800; color: var(--ink); }
+.size-price { margin-top: auto; font-size: 14px; color: var(--muted); }
+.size-price strong { font-size: 18px; color: var(--navy); }
+.size-quote { margin-top: auto; font-weight: 700; color: #13A150; }
+
+/* Phones: price boxes as compact rows, label on the left and price on the right */
+@media (max-width: 640px) {
+  .price-stats { gap: 8px; }
+  .price-stat { grid-template-columns: 1fr auto; align-items: center; column-gap: 12px; padding: 12px 16px; }
+  .price-stat strong { grid-column: 2; grid-row: 1 / span 2; font-size: 20px; }
+  .price-stat em { grid-row: 2; }
+}
+@media (min-width: 641px) {
+  .area-grid, .incl-grid, .price-stats { grid-template-columns: repeat(3, 1fr); }
+  .size-grid { grid-template-columns: repeat(2, 1fr); }
+  .step-list { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1025px) {
+  .region-list { grid-template-columns: repeat(3, 1fr); align-items: start; }
+  .size-grid { grid-template-columns: repeat(3, 1fr); }
+  .step-list { grid-template-columns: repeat(4, 1fr); }
+  .step-list li { padding: 64px 18px 18px; }
 }

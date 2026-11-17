@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BATTERY_GUIDE, CATEGORIES, FAQS, PRODUCTS, REVIEWS, WARRANTY } from "@/lib/data";
 import { CONFIG, telLink, waLink } from "@/lib/config";
+import { AJK_PAGE, PRICE_PAGE, REGIONS } from "@/lib/areas";
 import CatLink from "./CatLink";
 import { Art, CategoryMedia, ProductMedia } from "./Art";
 import { ArrowIcon, BrandMark, ClockIcon, PhoneIcon, PinIcon, ShieldIcon, WaIcon, WrenchIcon } from "./Icons";
@@ -16,14 +17,14 @@ export function Hero() {
           <Image className="hero-img" src="/images/site/hero.jpg" alt="Rows of solar panels on a large roof at sunset" fill priority sizes="(max-width: 1024px) 100vw, 900px" />
           <div className="hero-shade" />
           <div className="hero-content">
-            <span className="hero-kicker">Bismillah Battery Center · {CONFIG.city}, AJK</span>
-            <h1>Power your home with <span className="gold-text">clean solar energy</span></h1>
-            <p className="hero-sub">Hybrid inverters, premium solar panels, lithium batteries and complete installation, all from one trusted name in {CONFIG.city}, Azad Kashmir.</p>
+            <span className="hero-kicker">150+ solar systems installed · Free site survey</span>
+            <h1>Solar installation in <span className="gold-text">{CONFIG.city} &amp; Azad Kashmir</span></h1>
+            <p className="hero-sub">{CONFIG.businessName} supplies and installs complete solar systems (panels, hybrid inverters and lithium batteries) and looks after them from our shop in {CONFIG.city}.</p>
             <div className="hero-ctas">
               <a className="btn btn-gold" href={waLink("Assalam o Alaikum! I want a free quote for a solar system for my home.")} target="_blank" rel="noopener">
                 Get Free Solar Quote <ArrowIcon />
               </a>
-              <CatLink cat="solar" className="btn btn-glass">Shop Solar Products</CatLink>
+              <Link href={PRICE_PAGE} className="btn btn-glass">See Solar Prices</Link>
             </div>
             <div className="hero-stats">
               <div><strong>150+</strong><span>Solar projects completed</span></div>
@@ -148,6 +149,32 @@ export function SolarSection() {
             <a className="btn btn-glass" href={telLink()}><PhoneIcon /> Call an Expert</a>
             <a className="btn btn-glass" href="#calculator">Calculate Solar Output →</a>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Areas we cover (links to the Azad Kashmir installation page) ---------- */
+export function AreasBand() {
+  return (
+    <section className="section areas" id="areas" aria-labelledby="areas-title">
+      <div className="container">
+        <div className="sec-head">
+          <div>
+            <p className="eyebrow">Areas we cover</p>
+            <h2 id="areas-title">Solar installation across Azad Kashmir</h2>
+            <p className="sec-sub">Based in {CONFIG.city}, we survey, install and service solar systems in every district of AJK.</p>
+          </div>
+          <Link href={AJK_PAGE} className="view-all">All areas &amp; how it works <b>→</b></Link>
+        </div>
+        <div className="area-grid">
+          {REGIONS.map((r) => (
+            <Link key={r.id} href={`${AJK_PAGE}#${r.id}`} className="area-card">
+              <strong>{r.name}</strong>
+              <span>{r.districts.flatMap((d) => d.towns).slice(0, 6).join(" · ")}</span>
+            </Link>
+          ))}
         </div>
       </div>
     </section>
@@ -323,7 +350,8 @@ export function Footer() {
         <div>
           <h4>Company</h4>
           <ul>
-            <li><a href="/#solar">Solar Installation</a></li>
+            <li><Link href={AJK_PAGE}>Solar Installation in AJK</Link></li>
+            <li><Link href={PRICE_PAGE}>Solar System Prices</Link></li>
             <li><a href="/#calculator">Solar Calculator</a></li>
             <li><a href="/#faq">FAQs</a></li>
             <li><a href="/#batteries">Battery Guide</a></li>
@@ -339,6 +367,9 @@ export function Footer() {
             <li><PhoneIcon /><a href={telLink()}>{CONFIG.phone}</a></li>
             <li><WaIcon /><a href={waLink("Assalam o Alaikum!")} target="_blank" rel="noopener">WhatsApp: {CONFIG.phone}</a></li>
             <li><ClockIcon /><span>{CONFIG.hours}</span></li>
+            {CONFIG.googleBusinessUrl && (
+              <li><PinIcon /><a href={CONFIG.googleBusinessUrl} target="_blank" rel="noopener">Find us &amp; review us on Google Maps</a></li>
+            )}
           </ul>
         </div>
       </div>

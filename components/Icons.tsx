@@ -53,8 +53,9 @@ export const StarIcon =({ className }: P) => (
   <svg viewBox="0 0 24 24" className={className} aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2Z" /></svg>
 );
 
-/* Shop logo shown next to the shop name (header, mobile menu, footer). File: public/images/bbc-logo.png */
+/* Shop logo shown next to the shop name (header, mobile menu, footer). File: public/images/bbc-logo.png
+   (a small 128px copy made by scripts/optimize-images.mjs is used, so it loads instantly on phones). */
 export function BrandMark({ className = "brand-mark" }: { bg?: string; className?: string }) {
   // eslint-disable-next-line @next/next/no-img-element
-  return <img className={className} src="/images/bbc-logo.png" alt="" aria-hidden="true" width={46} height={46} />;
+  return <img className={className} src="/_img/bbc-logo-128.webp" alt="" aria-hidden="true" width={46} height={46} />;
 }

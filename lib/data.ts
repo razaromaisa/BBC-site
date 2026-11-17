@@ -215,8 +215,8 @@ export const FAQS = [
     a: "A 48V 100Ah (5.12 kWh) lithium battery runs a 500 W load (a few fans, lights, a TV and a fridge) for about 8 hours. A 12V 200Ah tubular battery gives about 2 hours on the same load. Backup depends on how many appliances you run." },
   { q: "Lithium or tubular battery: which is better for solar?",
     a: "Lithium (LiFePO4) lasts 10+ years, needs no maintenance and gives almost double the usable energy, so it is best for daily solar use. Tubular acid batteries cost less upfront and are a good value choice for home UPS backup." },
-  { q: "Do you install solar systems and CCTV cameras?",
-    a: "Yes. BBC has completed 150+ solar projects. We do a free site survey, design the system, install it and provide after-sales service. We also install CCTV camera packages and home UPS systems." },
+  { q: "Do you install solar systems outside Kotli?",
+    a: "Yes. BBC has completed 150+ solar projects and installs across Azad Kashmir, including Mirpur, Bhimber, Muzaffarabad, Rawalakot and Bagh. We survey the site, design the system, install it and provide after-sales service. We also install CCTV camera packages and home UPS systems." },
   { q: "Where is Bismillah Battery Center located?",
     a: `Our shop is on ${CONFIG.address}. Opening hours: ${CONFIG.hours}. Call or WhatsApp ${CONFIG.phone}.` },
 ];

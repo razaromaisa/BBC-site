@@ -1,0 +1,28 @@
+# Security headers sent with every page (read by Cloudflare Pages).
+#
+# Content-Security-Policy: the browser only runs scripts / loads files from the sources listed here,
+# which blocks injected scripts (XSS) from other sites.
+#   - Google Tag Manager / Analytics: only used when gaId is set in lib/config.ts.
+#   - static.cloudflareinsights.com: Cloudflare Web Analytics, if you switch it on in the Cloudflare dashboard.
+#   - www.google.com: the shop-location map on the home page.
+#   - 'unsafe-inline' scripts: needed by Next.js for its page data on a static site.
+# Strict-Transport-Security: browsers always use HTTPS for this site (Cloudflare serves HTTPS automatically).
+# The other headers are standard hardening.
+# Each header must stay on ONE line.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://*.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://cloudflareinsights.com; frame-src https://www.google.com https://maps.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=63072000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+
+# The share-preview picture (app/opengraph-image.tsx) is saved without a file extension,
+# so tell browsers and WhatsApp / Facebook that it is a PNG image.
+/opengraph-image
+  Content-Type: image/png
+
+# Next.js puts a unique fingerprint in these file names, so browsers can keep them for a year.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
