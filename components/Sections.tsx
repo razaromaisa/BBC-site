@@ -7,21 +7,6 @@ import { Art, CategoryMedia, ProductMedia } from "./Art";
 import { ArrowIcon, BrandMark, ClockIcon, PhoneIcon, PinIcon, ShieldIcon, WaIcon, WrenchIcon } from "./Icons";
 
 
-/* ---------- Announcement bar ---------- */
-export function Announcement() {
-  return (
-    <div className="announce">
-      <div className="container announce-inner">
-        <p><strong>150+ solar projects</strong> completed in {CONFIG.city} &amp; nearby &nbsp;·&nbsp; Free site survey for solar systems</p>
-        <div className="announce-right">
-          <span>{CONFIG.hours}</span>
-          <a href={telLink()}>{CONFIG.phone}</a>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 /* ---------- Hero ---------- */
 export function Hero() {
   return (
@@ -81,13 +66,15 @@ export function TrustStrip() {
   ];
   return (
     <section className="trust">
-      <div className="container trust-grid">
-        {items.map((it) => (
-          <div className="trust-item" key={it.title}>
-            <span className="t-ico">{it.icon}</span>
-            <div><strong>{it.title}</strong><small>{it.sub}</small></div>
-          </div>
-        ))}
+      <div className="container">
+        <div className="trust-grid">
+          {items.map((it) => (
+            <div className="trust-item" key={it.title}>
+              <span className="t-ico">{it.icon}</span>
+              <div><strong>{it.title}</strong><small>{it.sub}</small></div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -180,16 +167,20 @@ export function BatteryGuide() {
           </div>
         </div>
         <div className="bat-grid">
-          {BATTERY_GUIDE.map((b) => (
+          {BATTERY_GUIDE.map((b) => {
+            // Uses a matching product's photo if one exists, otherwise the built-in drawing
+            const p = PRODUCTS.find((x) => x.art === b.art);
+            return (
             <article className="bat-card reveal" key={b.name}>
-              <div className="bat-art"><ProductMedia p={PRODUCTS.find((x) => x.art === b.art)!} sizes="(max-width: 640px) 90vw, 360px" /></div>
+              <div className="bat-art">{p ? <ProductMedia p={p} sizes="(max-width: 640px) 90vw, 360px" /> : <Art name={b.art} label={b.name} />}</div>
               <span className={`bat-tag ${b.tagClass}`}>{b.tag}</span>
               <h3>{b.name}</h3>
               <p className="bat-best"><span>Best for</span>{b.best}</p>
               <ul>{b.points.map((x) => <li key={x}>{x}</li>)}</ul>
               <CatLink as="button" cat="ups" query={b.search} className="btn btn-outline btn-block">Shop {b.short} batteries</CatLink>
             </article>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

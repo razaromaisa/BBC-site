@@ -6,8 +6,8 @@ import Header from "@/components/Header";
 import RevealObserver from "@/components/RevealObserver";
 import Analytics from "@/components/Analytics";
 import { BusinessJsonLd } from "@/components/JsonLd";
-import { Backdrop, CartDrawer, MobileMenu, Toast, WhatsAppFloat } from "@/components/Overlays";
-import { Announcement, Footer } from "@/components/Sections";
+import { Backdrop, BottomNav, CartDrawer, MobileMenu, Toast, WhatsAppFloat } from "@/components/Overlays";
+import { Footer } from "@/components/Sections";
 import { CONFIG, SITE_URL } from "@/lib/config";
 import "./globals.css";
 
@@ -55,7 +55,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a className="skip-link" href="#main">Skip to content</a>
         <SvgDefs />
         <ShopProvider>
-          <Announcement />
           <Header />
           <MobileMenu />
           <main id="main">{children}</main>
@@ -64,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Backdrop />
           <Toast />
           <WhatsAppFloat />
+          <BottomNav />
           <RevealObserver />
         </ShopProvider>
         <BusinessJsonLd />

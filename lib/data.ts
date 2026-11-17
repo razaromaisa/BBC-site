@@ -18,6 +18,8 @@ export type Category = {
   /** Web address of the category page: /products/<slug> */
   slug: string;
   name: string;
+  /** Short label for the menu bar */
+  short: string;
   art: string;
   tint: string;
   /** Main heading on the category page */
@@ -49,49 +51,49 @@ export type Product = {
 
 export const CATEGORIES: Category[] = [
   {
-    key: "solar", slug: "solar-panels-inverters", name: "Solar Panels & Systems", art: "panel", tint: "linear-gradient(160deg,#EEF4FF,#DCE7FF)",
+    key: "solar", slug: "solar-panels-inverters", name: "Solar Panels & Systems", short: "Solar", art: "panel", tint: "linear-gradient(160deg,#EEF4FF,#DCE7FF)",
     h1: `Solar panels, inverters & complete solar systems in ${CONFIG.city}`,
     metaTitle: `Solar Panels & Hybrid Inverters in ${CONFIG.city}, AJK`,
     metaDesc: `Mono PERC and N-type bifacial solar panels, hybrid inverters and complete installed solar systems in ${CONFIG.city}, Azad Kashmir. Free site survey, prices in PKR.`,
     intro: `We supply A-grade solar panels and hybrid inverters from brands like Longi, Jinko, Inverex and Growatt, and install complete systems in ${CONFIG.city} and nearby areas. Every job starts with a free site survey, so the system is sized to your roof and to the appliances you actually run.`,
   },
   {
-    key: "ups", slug: "ups-batteries", name: "UPS & Batteries", art: "catBattery", tint: "linear-gradient(160deg,#EAFBF2,#D3F3E3)",
+    key: "ups", slug: "ups-batteries", name: "UPS & Batteries", short: "UPS & Batteries", art: "catBattery", tint: "linear-gradient(160deg,#EAFBF2,#D3F3E3)",
     h1: `UPS & batteries in ${CONFIG.city}: lithium, tubular & dry`,
     metaTitle: `Lithium, Tubular & Dry Batteries and UPS in ${CONFIG.city}`,
     metaDesc: `LiFePO4 lithium, tubular, dry and car batteries plus pure sine wave home UPS in ${CONFIG.city}, AJK. Old battery exchange and warranty claims handled at our shop.`,
     intro: "Batteries are where we started. We stock lithium (LiFePO4) packs for solar, deep-cycle tubular batteries for home UPS, sealed dry batteries and maintenance-free car batteries. Bring your old battery for an exchange price, and we will take care of warranty claims with the company for you.",
   },
   {
-    key: "cooling", slug: "fans-coolers-ac", name: "Fans, Coolers & AC", art: "pedestalFan", tint: "linear-gradient(160deg,#ECF7FD,#D8EDF8)",
+    key: "cooling", slug: "fans-coolers-ac", name: "Fans, Coolers & AC", short: "Fans & AC", art: "pedestalFan", tint: "linear-gradient(160deg,#ECF7FD,#D8EDF8)",
     h1: `Fans, air coolers & inverter ACs in ${CONFIG.city}`,
     metaTitle: `Ceiling Fans, Air Coolers & Inverter AC in ${CONFIG.city}`,
     metaDesc: `Energy-saving ceiling fans, DC inverter fans that run on solar and UPS, pedestal fans, room air coolers and DC inverter ACs in ${CONFIG.city}, Azad Kashmir.`,
     intro: "If you run on solar or UPS, the fan you choose matters. A DC inverter fan uses about 35 W against roughly 80 W for a standard ceiling fan, which nearly doubles your backup time. We also keep pedestal fans, room coolers and 1.5-ton DC inverter ACs.",
   },
   {
-    key: "lights", slug: "lights-bulbs", name: "Lights & Bulbs", art: "bulb", tint: "linear-gradient(160deg,#FFF8E6,#FFEDC2)",
+    key: "lights", slug: "lights-bulbs", name: "Lights & Bulbs", short: "Lights", art: "bulb", tint: "linear-gradient(160deg,#FFF8E6,#FFEDC2)",
     h1: "LED bulbs, tube lights, solar street lights & emergency lights",
     metaTitle: `LED Bulbs, Tube Lights & Solar Street Lights in ${CONFIG.city}`,
     metaDesc: `LED bulbs and tube lights, rechargeable emergency lights and solar street lights with built-in battery, available at our shop in ${CONFIG.city}, AJK.`,
     intro: "Low-wattage LED bulbs and tube lights for homes and shops, rechargeable emergency lights for load-shedding, and solar street lights with a built-in battery for streets, gates and boundary walls. They switch on by themselves at dusk.",
   },
   {
-    key: "irons", slug: "irons-hair-styling", name: "Irons & Curlers", art: "steamIron", tint: "linear-gradient(160deg,#F5F0FF,#E7DDFF)",
+    key: "irons", slug: "irons-hair-styling", name: "Irons & Curlers", short: "Irons & Curlers", art: "steamIron", tint: "linear-gradient(160deg,#F5F0FF,#E7DDFF)",
     h1: "Irons, steam press & hair styling tools",
     metaTitle: `Irons, Hair Straighteners & Curlers in ${CONFIG.city}`,
     metaDesc: `Dry irons, steam irons, a standing steam press for clothes, and ceramic hair straighteners and curlers at ${CONFIG.shortName} in ${CONFIG.city}, Azad Kashmir.`,
     intro: "Dry irons and steam irons for everyday ironing, a standing steam press for suits and curtains, and ceramic hair straighteners and curlers with temperature control.",
   },
   {
-    key: "home", slug: "home-appliances", name: "Home Appliances", art: "tv", tint: "linear-gradient(160deg,#FFF1EC,#FFE0D5)",
+    key: "home", slug: "home-appliances", name: "Home Appliances", short: "Home Appliances", art: "tv", tint: "linear-gradient(160deg,#FFF1EC,#FFE0D5)",
     h1: `Home appliances in ${CONFIG.city}`,
     metaTitle: `Home Appliances, TVs & Fridges in ${CONFIG.city}`,
     metaDesc: `Smart LED TVs, refrigerators, washing machines, microwaves, air fryers and kitchen appliances with official warranty in ${CONFIG.city}, AJK. Home delivery available.`,
     intro: `Smart LED TVs, refrigerators, washing machines and everyday kitchen appliances, all with the official brand warranty. Ask us about delivery to your home in ${CONFIG.city}.`,
   },
   {
-    key: "cctv", slug: "cctv-cameras", name: "CCTV Cameras", art: "cctvPack", tint: "linear-gradient(160deg,#F1F3F7,#E1E6EE)",
+    key: "cctv", slug: "cctv-cameras", name: "CCTV Cameras", short: "CCTV", art: "cctvPack", tint: "linear-gradient(160deg,#F1F3F7,#E1E6EE)",
     h1: `CCTV cameras & installation in ${CONFIG.city}`,
     metaTitle: `CCTV Cameras & Installation in ${CONFIG.city}, AJK`,
     metaDesc: `CCTV camera packages installed for homes, shops and offices in ${CONFIG.city}, with mobile viewing set up. Wi-Fi, bullet and dome cameras and DVR/NVR recorders.`,

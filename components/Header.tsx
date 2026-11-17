@@ -1,34 +1,29 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CATEGORIES, PRODUCTS, catName, categoryHref } from "@/lib/data";
 import { CONFIG, rs, telLink, waLink } from "@/lib/config";
-import { useShop, type CatFilter } from "./ShopProvider";
-import { CategoryMedia, ProductMedia } from "./Art";
-import { BrandMark, CartIcon, PhoneIcon, ShieldIcon, WaIcon } from "./Icons";
+import { useShop } from "./ShopProvider";
+import { ProductMedia } from "./Art";
+import { BrandMark, CartIcon, PhoneIcon, SearchIcon, WaIcon } from "./Icons";
 
-const NAV: { label: string; href: string }[] = [
-  { label: "Solar", href: categoryHref("solar") },
-  { label: "Calculator", href: "/#calculator" },
-  { label: "UPS & Batteries", href: categoryHref("ups") },
-  { label: "Fans & AC", href: categoryHref("cooling") },
-  { label: "Home Appliances", href: categoryHref("home") },
-  { label: "CCTV", href: categoryHref("cctv") },
+/* Extra links shown after the categories in the menu bar */
+const EXTRA: { label: string; href: string }[] = [
+  { label: "Solar Calculator", href: "/#calculator" },
   { label: "Installation", href: "/#solar" },
   { label: "Contact", href: "/#contact" },
 ];
 
 export default function Header() {
   const shop = useShop();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const [catOpen, setCatOpen] = useState(false);
   const [text, setText] = useState("");
-  const [selCat, setSelCat] = useState<CatFilter>("all");
   const [suggestOpen, setSuggestOpen] = useState(false);
   const [active, setActive] = useState(-1);
   const searchRef = useRef<HTMLFormElement>(null);
-  const catRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -41,9 +36,8 @@ export default function Header() {
   useEffect(() => {
     const onDown = (e: MouseEvent) => {
       if (!searchRef.current?.contains(e.target as Node)) setSuggestOpen(false);
-      if (!catRef.current?.contains(e.target as Node)) setCatOpen(false);
     };
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") { setSuggestOpen(false); setCatOpen(false); shop.closeAll(); } };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") { setSuggestOpen(false); shop.closeAll(); } };
     document.addEventListener("mousedown", onDown);
     document.addEventListener("keydown", onKey);
     return () => { document.removeEventListener("mousedown", onDown); document.removeEventListener("keydown", onKey); };
@@ -55,14 +49,15 @@ export default function Header() {
   const matches = useMemo(() => {
     const words = text.trim().toLowerCase().split(/\s+/).filter(Boolean);
     if (!words.length) return [];
-    return PRODUCTS.filter((p) => (selCat === "all" || p.cat === selCat) &&
+    return PRODUCTS.filter((p) =>
       words.every((w) => `${p.name} ${p.spec} ${catName(p.cat)}`.toLowerCase().includes(w))).slice(0, 6);
-  }, [text, selCat]);
+  }, [text]);
 
   const submit = (e?: React.FormEvent) => {
     e?.preventDefault();
     setSuggestOpen(false);
-    shop.goTo(selCat, { query: text.trim() });
+    (document.activeElement as HTMLElement | null)?.blur();
+    shop.goTo("all", { query: text.trim() });
   };
 
   const onKeyDown = (e: React.KeyboardEvent) => {
@@ -85,32 +80,22 @@ export default function Header() {
   return (
     <header className={`site-header${scrolled ? " scrolled" : ""}`}>
       <div className="container head-main">
-        <button className="icon-btn menu-toggle" aria-label="Open menu" onClick={shop.openMenu}>
-          <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
-        </button>
-
         <Link href="/" className="brand" aria-label="BBC – Bismillah Battery Center, home">
           <BrandMark />
           <span className="brand-text"><strong>BBC</strong><small>Bismillah Battery Center</small></span>
         </Link>
 
         <form className="search" role="search" autoComplete="off" ref={searchRef} onSubmit={submit}>
-          <label className="sr-only" htmlFor="searchCat">Category</label>
-          <select id="searchCat" className="search-cat" value={selCat} onChange={(e) => { setSelCat(e.target.value as CatFilter); setSuggestOpen(true); }}>
-            <option value="all">All</option>
-            {CATEGORIES.map((c) => <option key={c.key} value={c.key}>{c.name}</option>)}
-          </select>
+          <SearchIcon className="search-ico" />
           <label className="sr-only" htmlFor="searchInput">Search products</label>
           <input
-            id="searchInput" type="search" placeholder="Search solar panels, batteries, ACs, TVs…"
+            id="searchInput" type="search" enterKeyHint="search" placeholder="Search solar panels, batteries, fans…"
             value={text}
             onChange={(e) => { setText(e.target.value); setSuggestOpen(true); setActive(-1); }}
             onFocus={() => setSuggestOpen(true)}
             onKeyDown={onKeyDown}
           />
-          <button type="submit" className="search-btn" aria-label="Search">
-            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" strokeWidth="2" /><path d="m20 20-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
-          </button>
+          <button type="submit" className="search-btn">Search</button>
 
           {suggestOpen && text.trim() && (
             <div className="suggest" role="listbox">
@@ -138,8 +123,9 @@ export default function Header() {
         <div className="head-actions">
           <a className="head-call" href={telLink()}>
             <span className="head-call-ico"><PhoneIcon /></span>
-            <span><small>Call us</small><strong>{CONFIG.phone}</strong></span>
+            <span><small>Call or WhatsApp</small><strong>{CONFIG.phone}</strong></span>
           </a>
+          <a className="icon-btn head-tel" href={telLink()} aria-label={`Call ${CONFIG.phone}`}><PhoneIcon /></a>
           <a className="icon-btn icon-wa" href={waLink("Assalam o Alaikum! I want to ask about your products.")} target="_blank" rel="noopener" aria-label="WhatsApp us">
             <WaIcon />
           </a>
@@ -152,31 +138,20 @@ export default function Header() {
 
       <nav className="head-nav" aria-label="Main">
         <div className="container nav-row">
-          <div className="cat-menu" ref={catRef}>
-            <button className="cat-btn" aria-expanded={catOpen} onClick={() => setCatOpen((o) => !o)}>
-              <svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" /></svg>
-              All Categories
-              <svg className="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
-            </button>
-            {catOpen && (
-              <div className="cat-dropdown">
-                {CATEGORIES.map((c) => (
-                  <Link key={c.key} href={categoryHref(c.key)} onClick={() => setCatOpen(false)}>
-                    <span className="dd-art" style={{ background: c.tint }}><CategoryMedia c={c} decorative /></span>
-                    <span><strong>{c.name}</strong><small>{PRODUCTS.filter((p) => p.cat === c.key).length} products</small></span>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
           <ul className="nav-links">
-            {NAV.map((n) => (
-              <li key={n.label}>
-                {n.href.startsWith("/#") ? <a href={n.href}>{n.label}</a> : <Link href={n.href}>{n.label}</Link>}
-              </li>
-            ))}
+            <li><Link href="/" aria-current={pathname === "/" ? "page" : undefined}>Home</Link></li>
+            {CATEGORIES.map((c) => {
+              const href = categoryHref(c.key);
+              return (
+                <li key={c.key}>
+                  <Link href={href} aria-current={pathname === href ? "page" : undefined}>{c.short}</Link>
+                </li>
+              );
+            })}
           </ul>
-          <span className="nav-badge"><ShieldIcon /> Genuine products · Official warranty</span>
+          <ul className="nav-links nav-extra">
+            {EXTRA.map((n) => <li key={n.label}><a href={n.href}>{n.label}</a></li>)}
+          </ul>
         </div>
       </nav>
     </header>

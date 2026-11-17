@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { CATEGORIES, REVIEWS, categoryHref } from "@/lib/data";
 import { rs, waLink } from "@/lib/config";
 import { rememberWhatsApp } from "@/lib/whatsapp";
 import { useShop } from "./ShopProvider";
 import { CategoryMedia, ProductMedia } from "./Art";
-import { BrandMark, CartIcon, CloseIcon, WaIcon } from "./Icons";
+import { BrandMark, CartIcon, CloseIcon, GridIcon, HomeIcon, WaIcon } from "./Icons";
 
 export function MobileMenu() {
   const { menuOpen, closeAll } = useShop();
@@ -132,5 +132,33 @@ export function WhatsAppFloat() {
     <a className="wa-float" href={waLink("Assalam o Alaikum! I want to ask about your products.")} target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
       <WaIcon />
     </a>
+  );
+}
+
+/** App-style navigation bar fixed to the bottom of the screen on phones & small tablets. */
+export function BottomNav() {
+  const { count, menuOpen, cartOpen, openMenu, openCart, closeAll } = useShop();
+  const pathname = usePathname();
+  const onHome = pathname === "/" && !menuOpen && !cartOpen;
+  return (
+    <nav className="bottom-nav" aria-label="Quick links">
+      <Link href="/" className={onHome ? "on" : ""} aria-current={pathname === "/" ? "page" : undefined}
+        onClick={() => { closeAll(); if (pathname === "/") window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+        <HomeIcon /><span>Home</span>
+      </Link>
+      <button type="button" className={menuOpen ? "on" : ""} aria-expanded={menuOpen} onClick={menuOpen ? closeAll : openMenu}>
+        <GridIcon /><span>Categories</span>
+      </button>
+      <button type="button" className={cartOpen ? "on" : ""} aria-expanded={cartOpen} onClick={cartOpen ? closeAll : openCart}>
+        <span className="bn-ico">
+          <CartIcon />
+          {count > 0 && <b key={count} className="bn-count">{count}</b>}
+        </span>
+        <span>Cart</span>
+      </button>
+      <a className="bn-wa" href={waLink("Assalam o Alaikum! I want to ask about your products.")} target="_blank" rel="noopener">
+        <WaIcon /><span>WhatsApp</span>
+      </a>
+    </nav>
   );
 }
