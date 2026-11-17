@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 import { DEVICE_SIZES, IMAGE_SIZES } from "./lib/image-sizes.mjs";
 
-/* Hosting: Cloudflare Pages (free plan).
+/* Hosting: Cloudflare (free plan), set up in wrangler.jsonc.
    `npm run build` turns the whole site into plain files in the `out/` folder, which Cloudflare serves directly.
    Because there is no server:
    - Security headers live in public/_headers, and redirects in public/_redirects (Cloudflare reads both).

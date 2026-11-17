@@ -1,0 +1,17 @@
+// Cloudflare settings. The site is plain files: `npm run build` puts them in out/, and Cloudflare serves
+// that folder directly (unlimited and free on the free plan). No server code runs.
+// Without this file Cloudflare guesses the setup and tries to run Next.js as a server (OpenNext),
+// which fails because the site is a static export.
+{
+  // Must match the project name in the Cloudflare dashboard (Workers & Pages → bbc-site)
+  "name": "bbc-site",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./out",
+    // /products/ups-batteries serves out/products/ups-batteries.html
+    "html_handling": "auto-trailing-slash",
+    // Unknown addresses show the site's own "page not found" page (out/404.html)
+    "not_found_handling": "404-page"
+  }
+  // public/_headers (security headers) and public/_redirects (short links) are read automatically.
+}
